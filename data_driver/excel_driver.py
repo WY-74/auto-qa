@@ -1,11 +1,14 @@
 import openpyxl
 import traceback
 from openpyxl.styles import PatternFill, Font
-from keys.web_keys import WebKeys
+from base.web import WebKeys
 from config import log
 
 
 class ExcelDriver:
+    def __init__(self) -> None:
+        self.logger = log.get_logger()
+
     def get_parameter(self, raw: str):
         parameters = dict()
         if raw:
@@ -15,9 +18,8 @@ class ExcelDriver:
 
         return parameters
 
-    def run(self, data_path, thread_id):
+    def run(self, data_path):
         excel = openpyxl.load_workbook(data_path)
-        logger = log.get_logger(thread_id)
 
         for sheet in excel.sheetnames:
             if sheet.startswith("#"):  # 跳过某些用例
@@ -26,7 +28,7 @@ class ExcelDriver:
             web = WebKeys()
             for column in excel[sheet].values:
                 if isinstance(column[0], int):
-                    logger.info(column[3])
+                    self.logger.info(column[3])
                     try:
                         parameters = self.get_parameter(column[2])
                         getattr(web, column[1])(**parameters)

@@ -1,5 +1,4 @@
 import os
-import threading
 from data_driver.excel_driver import ExcelDriver
 
 
@@ -12,8 +11,4 @@ if __name__ == "__main__":
 
         for file in files:
             if file.endswith(".xlsx"):
-                thread_id = len(ths)
-                ths.append(threading.Thread(target=ExcelDriver().run, args=[f"{path}{file}", thread_id]))
-
-        for th in ths:
-            th.start()
+                ExcelDriver().run(f"{path}{file}")

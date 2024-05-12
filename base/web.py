@@ -1,27 +1,11 @@
-from selenium import webdriver
 from time import sleep
 from typing import Any
-from config.chrome_options import chrome_options
-
-
-def open_browser(browser_type: str | None):
-    """
-    bowser_type:
-        Chrome: Chrome, chrome, Googel Chrome, google chrome
-    """
-
-    browser_map = {"Chrome": ["Chrome", "chrome", "Googel Chrome", "google chrome"]}
-
-    for key, value in browser_map.items():
-        if browser_type in value:
-            return getattr(webdriver, key)()
-
-    return webdriver.Chrome(options=chrome_options())
+from config.chrome_options import get_driver
 
 
 class WebKeys:
     def __init__(self, browser_type: str | None = None):
-        self.driver = open_browser(browser_type)
+        self.driver = get_driver(browser_type)
         self.driver.implicitly_wait(10)
 
     def accept_alert(self, text: str | None = None):
