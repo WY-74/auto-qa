@@ -19,7 +19,7 @@ def chrome_options():
     return options
 
 
-def get_driver(browser_type: str | None = "Chrome"):
+def get_driver(browser_type: str | None = None):
     """
     bowser_type:
         Chrome: Chrome, chrome, Googel Chrome, google chrome

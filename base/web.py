@@ -1,12 +1,10 @@
 from time import sleep
 from typing import Any
-from config.chrome_options import get_driver
 
 
 class WebKeys:
-    def __init__(self, browser_type: str | None = None):
-        self.driver = get_driver(browser_type)
-        self.driver.implicitly_wait(10)
+    def __init__(self, driver):
+        self.driver = driver
 
     def accept_alert(self, text: str | None = None):
         _alert = self.driver.switch_to.alert
@@ -14,12 +12,12 @@ class WebKeys:
             _alert.send_keys(text)
         _alert.accept()
 
-    def assert_text_equal(self, by: str, value: str, expect: str):
-        actual = self.locator(by=by, value=value).text
+    def assert_text_equal(self, locator: tuple, expect: str):
+        actual = self.locator(locator).text
         assert actual == expect, f"actual: {actual} != expect: {expect}"
 
-    def click(self, by: str, value: str):
-        self.locator(by, value).click()
+    def click(self, locator):
+        self.locator(locator).click()
 
     def close(self):
         self.driver.quit()
@@ -33,11 +31,14 @@ class WebKeys:
     def get_alert_prompt(self):
         return self.driver.switch_to.alert.text
 
-    def input(self, by: str, value: str, txt: str):
-        self.locator(by, value).send_keys(txt)
+    def get_url(self):
+        return self.driver.current_url
 
-    def locator(self, by: str, value: str):
-        return self.driver.find_element(by=by, value=value)
+    def input(self, locator: tuple, txt: str):
+        self.locator(locator).send_keys(txt)
+
+    def locator(self, locator: tuple):
+        return self.driver.find_element(*locator)
 
     def open(self, url: str):
         self.driver.get(url)
