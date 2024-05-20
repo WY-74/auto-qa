@@ -7,7 +7,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.common.exceptions import WebDriverException, TimeoutException
 
 
 class WebKeys:
@@ -94,10 +95,34 @@ class WebKeys:
         for ck in cookies:
             self.driver.add_cookie(ck)
 
-    def scroll_and_click(self, locator: str | tuple | WebElement, index=0, root=None) -> bool:
+    def must_get_element(
+        self,
+        locator: str | tuple | WebElement,
+        index: int = 0,
+        root: WebDriver | WebElement | None = None,
+        timeout: int = 30,
+        ignored_exceptions=(TimeoutException,),
+    ) -> bool:
+        try:
+            getattr(WebDriverWait(self, timeout=timeout, ignored_exceptions=ignored_exceptions), "until")(
+                lambda x: x.get_elements(locator, index=index, root=root)
+            )
+        except ignored_exceptions as ie:
+            msg = f"no element with {locator} is found"
+            self.logger.error(msg)
+            raise ie
+
+        return True
+
+    def refresh(self):
+        self.driver.refresh()
+
+    def scroll_and_click(
+        self, locator: str | tuple | WebElement, index: int | None = 0, root: WebDriver | WebElement | None = None
+    ) -> bool:
         element = self.get_elements(locator, index=index, root=root)
         if not element:
-            msg = f"no with {locator} is found"
+            msg = f"no element with {locator} is found"
             self.logger.error(msg)
             raise ValueError(msg)
 
@@ -129,7 +154,6 @@ class WebKeys:
         value: str,
         index: int | None = 0,
         root: WebDriver | WebElement | None = None,
-        as_human: bool = False,
     ):
         elem = self.get_elements(locator, index=index, root=root)
         if not elem:
@@ -171,9 +195,6 @@ class WebKeys:
 
     def get_url(self):
         return self.driver.current_url
-
-    def input(self, locator: tuple, txt: str):
-        self.locator(locator).send_keys(txt)
 
     def open(self, url: str):
         self.driver.get(url)
