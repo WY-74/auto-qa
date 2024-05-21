@@ -1,12 +1,21 @@
-from ddt import ddt, file_data
+import yaml
+import pytest
 from cases.base_case import BaseCase
+from pages.template.template import Template
 
 
-@ddt
-class TestBaidu(BaseCase):
+def load_yaml(filepath: str):
+    with open(filepath, "r") as file:
+        data = yaml.load(file, yaml.FullLoader)
+
+    return data
+
+
+class TestTemplate(BaseCase):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
+    def setup_class(cls):
+        super().setup_class()
+        cls.template = Template(cls.driver)
 
-    @file_data("../../data/template/template.yaml")
-    def test_01_search(self, **kwargs): ...
+    @pytest.mark.parametrize('kwargs', load_yaml("../../data/template/template.yaml"))
+    def test_01_search(self, kwargs): ...

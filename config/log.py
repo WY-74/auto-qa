@@ -8,7 +8,7 @@ def get_logger():
     logger = logging.getLogger(f"auto-qa")
     logger.setLevel(logging.DEBUG)
 
-    file_handler = logging.FileHandler(filename=f'./report/{_now}.log', encoding='utf-8')
+    file_handler = logging.FileHandler(filename=f'./loginfo/{_now}.log', encoding='utf-8')
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(logging.Formatter('%(levelname)s [%(asctime)s] [%(filename)s:%(lineno)s] %(message)s'))
 
