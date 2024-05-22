@@ -17,5 +17,6 @@ class TestTemplate(BaseCase):
         super().setup_class()
         cls.template = Template(cls.driver)
 
+    @pytest.mark.hot
     @pytest.mark.parametrize('kwargs', load_yaml("../../data/template/template.yaml"))
     def test_01_search(self, kwargs): ...
