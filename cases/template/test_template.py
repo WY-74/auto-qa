@@ -20,4 +20,4 @@ class TestTemplate(BaseCase):
     @pytest.mark.hot
     @pytest.mark.parametrize('kwargs', load_yaml("./data/template/template.yaml"))
     def test_01_search(self, kwargs):
-        print(kwargs)
+        self.template.run(**kwargs)
