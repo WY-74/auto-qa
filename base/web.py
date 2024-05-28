@@ -12,7 +12,7 @@ from selenium.common.exceptions import WebDriverException, TimeoutException
 
 
 class WebKeys:
-    def __init__(self, driver: WebDriver):
+    def __init__(self, driver: WebDriver | None = None):
         self.driver = driver
         self.logger = get_logger()
 

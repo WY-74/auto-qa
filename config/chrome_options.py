@@ -19,7 +19,7 @@ def chrome_options():
     return options
 
 
-def get_driver(browser_type: str | None = None):
+def get_driver(driver_type: str | None = None):
     """
     bowser_type:
         Chrome: Chrome, chrome, Googel Chrome, google chrome
@@ -29,7 +29,7 @@ def get_driver(browser_type: str | None = None):
     driver = None
 
     for key, value in browser_map.items():
-        if browser_type in value:
+        if driver_type in value:
             driver = getattr(webdriver, key)()
     if driver is None:
         driver = webdriver.Chrome(options=chrome_options())

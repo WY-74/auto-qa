@@ -1,14 +1,7 @@
-import yaml
 import pytest
 from cases.base_case import BaseCase
 from pages.template.template import Template
-
-
-def load_yaml(filepath: str):
-    with open(filepath, "r") as file:
-        data = yaml.load(file, yaml.FullLoader)
-
-    return data
+from utils import load_yaml
 
 
 class TestTemplate(BaseCase):
