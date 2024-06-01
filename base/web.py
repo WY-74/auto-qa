@@ -1,7 +1,7 @@
 import json
 import time
 from typing import List
-from config.log import get_logger
+from config.log import logger
 from pathlib import Path
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
@@ -14,7 +14,8 @@ from selenium.common.exceptions import WebDriverException, TimeoutException
 class WebKeys:
     def __init__(self, driver: WebDriver | None = None):
         self.driver = driver
-        self.logger = get_logger()
+        self.logger = logger
+        self.logger.info("init webkeys finished")
 
     def click(
         self,
@@ -64,12 +65,13 @@ class WebKeys:
             2. index is None = multiple elems, just return elems
             3. index is int = not multiple, just return elems[index]
         """
-        self.logger.debug(f"find elements by {locator}")
         if not isinstance(locator, tuple) and not isinstance(locator, str):
             return locator
 
         if isinstance(locator, str):
             locator = (By.CSS_SELECTOR, locator)
+
+        self.logger.debug(f"find elements by {locator}")
 
         root = root or self.driver
         try:

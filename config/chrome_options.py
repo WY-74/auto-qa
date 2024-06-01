@@ -1,4 +1,5 @@
 from selenium import webdriver
+from config.log import logger
 
 
 def chrome_options():
@@ -16,6 +17,8 @@ def chrome_options():
     options.add_argument("--disable-gup")
     options.add_argument("--ignore-certificate-errors")
 
+    logger.debug(f"driver options: {options.to_capabilities()}")
+
     return options
 
 
@@ -30,9 +33,16 @@ def get_driver(driver_type: str | None = None):
 
     for key, value in browser_map.items():
         if driver_type in value:
-            driver = getattr(webdriver, key)()
+            driver_type = key
+            driver = getattr(webdriver, driver_type)()
+            break
+
     if driver is None:
+        driver_type = "Chrome"
         driver = webdriver.Chrome(options=chrome_options())
+
     driver.implicitly_wait(5)
+
+    logger.info("init driver finished")
 
     return driver
