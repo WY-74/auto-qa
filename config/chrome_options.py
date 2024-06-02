@@ -17,7 +17,7 @@ def chrome_options():
     options.add_argument("--disable-gup")
     options.add_argument("--ignore-certificate-errors")
 
-    logger.debug(f"driver options: {options.to_capabilities()}")
+    logger.debug(f"{options.to_capabilities()}")
 
     return options
 
