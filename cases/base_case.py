@@ -9,5 +9,5 @@ class BaseCase:
         cls.driver = get_driver()
 
     @classmethod
-    def teardown_class(self):
-        self.driver.quit()
+    def teardown_class(cls):
+        cls.driver.quit()
