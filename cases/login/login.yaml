@@ -1,0 +1,13 @@
+pages:
+data:
+  -
+    user: 15810505714
+    password: 123456
+  -
+    user: 111111
+    password: 111111
+  
+locators:
+  user_update_text: input[type="tel"]
+  password_update_text: input[type="password"]
+  submit_button: button[type="submit"]
