@@ -15,5 +15,4 @@ class TestTemplate(BaseCase):
     @pytest.mark.hot
     @pytest.mark.parametrize('data', load_yaml("./data/template/template.yaml"))
     def test_01_search(self, data):
-        locators = load_yaml("./locators/template/template.yaml")
-        self.template.run(locators, data)
+        self.template.run(self.locators, data)
