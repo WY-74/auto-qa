@@ -1,7 +1,7 @@
 import pytest
 from cases.base_case import BaseCase
 from pages.template.template import Template
-from utils import load_yaml
+from utils.parse_yaml import load_yaml
 from config.log import logger
 
 
@@ -13,6 +13,7 @@ class TestTemplate(BaseCase):
         logger.info("setup_class finished")
 
     @pytest.mark.hot
-    @pytest.mark.parametrize('kwargs', load_yaml("./data/template/template.yaml"))
-    def test_01_search(self, kwargs):
-        self.template.run(**kwargs)
+    @pytest.mark.parametrize('data', load_yaml("./data/template/template.yaml"))
+    def test_01_search(self, data):
+        locators = load_yaml("./locators/template/template.yaml")
+        self.template.run(locators, data)

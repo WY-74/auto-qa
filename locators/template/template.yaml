@@ -1,0 +1,2 @@
+search@update_text: input#kw
+submit@click: input#su
