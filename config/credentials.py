@@ -3,6 +3,7 @@
 import configparser
 
 credentials = {
+    "template": {"url": "https://www.baidu.com"},
     "dev": {},
     "qa": {},
     "main": {},

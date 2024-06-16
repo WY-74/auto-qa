@@ -1,0 +1,6 @@
+allure-pytest==2.13.5
+jsonpath==0.82.2
+pytest==8.2.0
+pyyaml==6.0.1
+requests==2.32.3
+selenium==4.20.0
