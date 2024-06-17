@@ -1,5 +1,5 @@
 from config.chrome_options import get_driver
-from config.credentials import credentials
+from config.credentials.credentials import credentials
 from base.api import ApiKeys
 from utils.parse_yaml import load_yaml
 
